@@ -90,13 +90,18 @@ async def uart_terminal():
                 heading = 0
             else:
                 heading = 180
+	
+        if (roll < -90):
+                roll = -90
+        if (roll > 90):
+                roll = 90;
         
         #if (roll+90 > 0):
             #Arm.Arm_serial_servo_write(5, roll+90, 500)
             
         #pitch above 90 degrees, bend servo 3 only    
         if (pitch <= 0):
-            Arm.Arm_serial_servo_write6(heading, 90, abs(pitch), 90, 90, 90, 500)
+            Arm.Arm_serial_servo_write6(heading, 90, abs(pitch), 90, roll+90, 90, 500)
             #Arm.Arm_serial_servo_write(3, abs(pitch), 500)
             #Arm.Arm_serial_servo_write(4, 90, 500)
             #Arm.Arm_serial_servo_write(2, 90, 500)
@@ -112,7 +117,7 @@ async def uart_terminal():
                 ang4 = 0
                 ang2 = interp(pitch, [75, 90], [120, 90])
             
-            Arm.Arm_serial_servo_write6(heading, ang2, 0, ang4, 90, 90, 500)
+            Arm.Arm_serial_servo_write6(heading, ang2, 0, ang4, roll+90, 90, 500)
         '''
             if (pitch >= 70):
                 ang = 90-pitch*1.3
